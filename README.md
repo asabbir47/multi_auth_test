@@ -1,2 +1,2 @@
-# muti_auth_test
-laravel muti auth using guard
+# multi_auth_test
+laravel multi auth using guard
