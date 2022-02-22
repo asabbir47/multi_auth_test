@@ -10,6 +10,7 @@ use App\Models\Writter;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -83,5 +84,27 @@ class RegisterController extends Controller
     public function showWriterRegisterForm()
     {
         return view('auth.register', ['url' => 'writer']);
+    }
+
+    protected function createAdmin(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        $admin = Admin::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
+        return redirect()->intended('login/admin');
+    }
+
+    protected function createWriter(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        $writer = Writer::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
+        return redirect()->intended('login/writer');
     }
 }
